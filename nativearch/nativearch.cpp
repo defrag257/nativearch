@@ -10,7 +10,7 @@ enum {
 	WINARCH_x64,
 	WINARCH_Itanium,
 	WINARCH_Win10ARM64, // 不能运行x64和ARM64EC
-	WINARCH_ARM64
+	WINARCH_Win11PlusARM64
 };
 
 int GetNativeArch(void)
@@ -29,7 +29,7 @@ int GetNativeArch(void)
 		case IMAGE_FILE_MACHINE_AMD64: return WINARCH_x64;
 		case IMAGE_FILE_MACHINE_ARM64:
 			if (GetProcAddress(hkernel32, "GetMachineTypeAttributes") != NULL)
-				return WINARCH_ARM64;
+				return WINARCH_Win11PlusARM64;
 			else
 				return WINARCH_Win10ARM64;
 		default: return WINARCH_unknown;
@@ -57,7 +57,7 @@ int main()
 	case WINARCH_x64: printf("Windows x64 64位 支持x86、x64程序\n"); break;
 	case WINARCH_Itanium: printf("Windows Itanium 64位 支持x86、Itanium程序\n"); break;
 	case WINARCH_Win10ARM64: printf("Windows 10 ARM64 64位 支持x86、ARMNT、ARM64程序\n"); break;
-	case WINARCH_ARM64: printf("Windows 11+ ARM64 64位 支持x86、x64、ARMNT、ARM64、ARM64EC（x64兼容的ARM64）、ARM64X（ARM64+ARM64EC复合）程序\n"); break;
+	case WINARCH_Win11PlusARM64: printf("Windows 11+ ARM64 64位 支持x86、x64、ARMNT、ARM64、ARM64EC（x64兼容的ARM64）、ARM64X（ARM64+ARM64EC复合）程序\n"); break;
 	default: printf("未知Windows平台\n"); break;
 	}
 	return 0;
